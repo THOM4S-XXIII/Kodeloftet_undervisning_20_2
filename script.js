@@ -36,7 +36,8 @@ console.log("Venter på svar..");
 // 
 // const fruitBowl = ["Epler", "Bananer", "Pærer"];
 
-async function fetchingData() { 
+async function fetchingData() {
+  try { 
   const data = await fetch("data.json");
   console.log(data);
 
@@ -45,7 +46,24 @@ console.log(response[1]);
 
 const fruitBowl = response.join(",");
 console.log(fruitBowl);
+
+return fruitBowl;
+} catch(error) {
+  console.log("Noe gikk galt..");
+  console.error(`${error}: Noe gikk galt..`);
+  alert("Noe gikk galt. Prøv igjen senere");
+}
 }
 
-// fetchingData();
-setTimeout(fetchingData, 3000);
+async function displayData() { 
+  const viewFruitBowl = await fetchingData();
+  console.log(viewFruitBowl);
+
+  const displayData = document.querySelector("#displayData");
+  const p = document.createElement("p");
+  p.textContent = viewFruitBowl;
+
+  displayData.appendChild(p);
+}
+
+displayData();
